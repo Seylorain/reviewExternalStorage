@@ -30,17 +30,43 @@ public class ExternalStorage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_external_storage);
         setTitle("External Storage");
+        //CWE                  256:Plaintext Storage of a Password
+        //Описание:            1)Флаг записывается в незашифрованном виде в файл flag.txt, который затем можно подсмотреть под рутом.
+        //                     2)Флаг хранится в некорректном виде. Его можно вывести в консоль:
+        //                           System.out.println("Flag="+flag);
+        //Решение проблемы:
+        // Убрать запись файл и переменную flag, т.е. следующий кусок кода:
+//        if (isExternalStorageWritable()) {
+//            File file = new File (Environment.getExternalStorageDirectory(), "flag.txt");
+//
+//            String flag="";
+//            try {
+//                flag = AESUtils.decrypt("848158E155106BA380AF0EA25D544A9B74E412283656C6584ED95EF25110B5D6");
+//                System.out.println("Flag="+flag);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//
+//            FileOutputStream fos;
+//
+//            try {
+//                fos = new FileOutputStream(file);
+//                fos.write(flag.getBytes());
+//                fos.close();
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//        }
 
         if (isExternalStorageWritable()) {
-
             File file = new File (Environment.getExternalStorageDirectory(), "flag.txt");
-//            System.out.println(String.valueOf(Environment.getExternalStorageDirectory()));
-            //File file = new File ("/data/data/com.termux/files/home/flag.txt");
 
             String flag="";
             try {
                 flag = AESUtils.decrypt("848158E155106BA380AF0EA25D544A9B74E412283656C6584ED95EF25110B5D6");
-                System.out.println("Flag="+flag);
             } catch (Exception e) {
                 e.printStackTrace();
             }
